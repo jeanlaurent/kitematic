@@ -11,11 +11,18 @@ run: install
 	npm start
 
 release: install
-	npm install electron-packager
 	npm run release
 	mv release/Kitematic-Mac.zip release/Kitematic-$(VERSION)-Mac.zip
 	mv release/Kitematic-Ubuntu.zip release/Kitematic-$(VERSION)-Ubuntu.zip
 	mv release/Kitematic-Windows.zip release/Kitematic-$(VERSION)-Windows.zip
+
+release-mac: install
+	npm run release:mac
+	mv dist/Kitematic-$(VERSION)-Mac.zip release/
+
+release-win: install
+	npm run release:win
+	mv dist/Kitematic-$(VERSION)-Win.zip release/Kitematic-$(VERSION)-Windows.zip
 
 #zip:
 #	docker container run --rm -it -w /to_zip -v $(PWD)/dist/Kitematic\ \(Beta\)-darwin-x64:/to_zip -v $(PWD)/dist:/out kramos/alpine-zip -r /out/Kitematic-$(VERSION)-Mac.zip .

@@ -119,7 +119,7 @@ module.exports = function (grunt) {
             'FileDescription': WINDOWS_APPNAME,
             'InternalName': BASENAME + '.exe',
             'OriginalFilename': BASENAME + '.exe',
-            'LegalCopyright': 'Copyright 2015-2016 Docker Inc. All rights reserved.'
+            'LegalCopyright': 'Copyright 2015-2018 Docker Inc. All rights reserved.'
           }
         }
       }
@@ -225,20 +225,6 @@ module.exports = function (grunt) {
             env: env
           }
         }
-      },
-      sign: {
-        options: {
-          failOnError: false
-        },
-        command: [
-          'codesign --deep -v -f -s "<%= IDENTITY %>" <%= OSX_FILENAME_ESCAPED %>/Contents/Frameworks/*',
-          'codesign -v -f -s "<%= IDENTITY %>" <%= OSX_FILENAME_ESCAPED %>',
-          'codesign -vvv --display <%= OSX_FILENAME_ESCAPED %>',
-          'codesign -v --verify <%= OSX_FILENAME_ESCAPED %>'
-        ].join(' && ')
-      },
-      zip: {
-        command: 'ditto -c -k --sequesterRsrc --keepParent <%= OSX_FILENAME_ESCAPED %> release/' + BASENAME + '-Mac.zip'
       },
       linux_npm: {
         command: 'cd build && npm install --production'
@@ -402,16 +388,15 @@ module.exports = function (grunt) {
 
   grunt.registerTask('default', ['newer:babel', 'less', 'newer:copy:dev', 'shell:electron', 'watchChokidar']);
 
-  if (!IS_WINDOWS && !IS_LINUX) {
-    grunt.registerTask('release', ['clean:release', 'babel', 'less', 'copy:dev', 'electron', 'copy:osx', 'shell:sign', 'shell:zip', 'copy:windows', 'rcedit:exes', 'compress', 'shell:linux_npm', 'electron-packager:osxlnx', 'electron-installer-debian:linux64', 'shell:linux_zip']);
-  }else if (IS_LINUX) {
+  grunt.registerTask('release-mac', ['clean:release', 'babel', 'less', 'copy:dev', 'copy:osx']);
+  grunt.registerTask('release-win', ['clean:release', 'babel', 'less', 'copy:dev', 'copy:windows', 'rcedit:exes']);
+  
+  if (IS_LINUX) {
     if (linuxpackage) {
-      grunt.registerTask('release', ['clean:release', 'babel', 'less', 'copy:dev', 'shell:linux_npm', 'electron-packager:build', linuxpackage]);
-    }else {
+      grunt.registerTask('release', ['clean:release', 'babel', 'less', 'copy:dev', 'shell:linux_npm', 'electron-packager:build', linuxpackage]);    
+    } else {
       grunt.log.errorlns('Your Linux distribution is not yet supported - arch:' + process.arch + ' platform:' + process.platform);
     }
-  }else {
-    grunt.registerTask('release', ['clean:release', 'babel', 'less', 'copy:dev', 'electron:windows', 'copy:windows', 'rcedit:exes', 'compress']);
   }
 
   process.on('SIGINT', function () {

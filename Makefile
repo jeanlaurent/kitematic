@@ -17,15 +17,14 @@ release: install
 	mv release/Kitematic-Windows.zip release/Kitematic-$(VERSION)-Windows.zip
 
 release-mac: install
+	mkdir release
 	npm run release:mac
 	mv dist/Kitematic-$(VERSION)-Mac.zip release/
 
 release-win: install
+	mkdir release
 	npm run release:win
-	mv dist/Kitematic-$(VERSION)-Win.zip release/Kitematic-$(VERSION)-Windows.zip
-
-#zip:
-#	docker container run --rm -it -w /to_zip -v $(PWD)/dist/Kitematic\ \(Beta\)-darwin-x64:/to_zip -v $(PWD)/dist:/out kramos/alpine-zip -r /out/Kitematic-$(VERSION)-Mac.zip .
+	mv dist\Kitematic-$(VERSION)-win.zip release\Kitematic-$(VERSION)-Windows.zip
 
 clean:
 	-rm .DS_Store

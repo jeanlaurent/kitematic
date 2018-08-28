@@ -2,8 +2,6 @@
 
 VERSION := $(shell jq -r '.version' package.json)
 
-# TODO: clearly need to note pre-req's - OSX and node installed? - see contributing docs
-
 install:
 	npm install
 
@@ -17,14 +15,14 @@ release: install
 	mv release/Kitematic-Windows.zip release/Kitematic-$(VERSION)-Windows.zip
 
 release-mac: install
-	mkdir release
+	mkdir -p release
 	npm run release:mac
 	mv dist/Kitematic-$(VERSION)-Mac.zip release/
 
 release-win: install
-	mkdir release
+	mkdir -p release
 	npm run release:win
-	mv dist\Kitematic-$(VERSION)-win.zip release\Kitematic-$(VERSION)-Windows.zip
+	mv dist/Kitematic-$(VERSION)-win.zip release/Kitematic-$(VERSION)-Windows.zip
 
 clean:
 	-rm .DS_Store

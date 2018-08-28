@@ -27,7 +27,7 @@
     "test": "jest -c jest-unit.json",
     "tslint": "tslint --fix --project ./tsconfig.json"
   },
-  "electron-version": "2.0.8",
+  "electron-version": "1.8.8",
   "dependencies": {
     "JSONStream": "1.0.7",
     "alt": "0.16.2",
@@ -41,7 +41,6 @@
     "coveralls": "2.11.2",
     "deep-extend": "^0.6.0",
     "dockerode": "2.2.10",
-    "electron-packager": "^12.1.1",
     "install": "0.1.8",
     "jquery": "3.1.0",
     "mixpanel": "kitematic/mixpanel-node",
@@ -66,7 +65,7 @@
     "@types/react": "16.0.31",
     "babel": "5.8.38",
     "babel-jest": "5.2.0",
-    "electron": "2.0.8",
+    "electron": "1.8.8",
     "electron-builder": "20.28.2",
     "eslint": "4.1.1",
     "eslint-plugin-react": "3.3.0",
@@ -83,7 +82,6 @@
     "grunt-download-electron": "2.1.4",
     "grunt-electron": "2.0.0",
     "grunt-electron-installer": "1.0.4",
-    "grunt-electron-packager": "0.1.1",
     "grunt-if-missing": "1.0.0",
     "grunt-newer": "1.1.1",
     "grunt-plistbuddy": "0.1.1",

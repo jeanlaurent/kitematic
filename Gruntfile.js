@@ -101,30 +101,6 @@ module.exports = function (grunt) {
       }
     },
 
-    rcedit: {
-      exes: {
-        files: [{
-          expand: true,
-          cwd: 'dist/' + BASENAME + '-win32-x64',
-          src: [BASENAME + '.exe']
-        }],
-        options: {
-          icon: 'util/kitematic.ico',
-          'file-version': packagejson.version,
-          'product-version': packagejson.version,
-          'version-string': {
-            'CompanyName': 'Docker',
-            'ProductVersion': packagejson.version,
-            'ProductName': WINDOWS_APPNAME,
-            'FileDescription': WINDOWS_APPNAME,
-            'InternalName': BASENAME + '.exe',
-            'OriginalFilename': BASENAME + '.exe',
-            'LegalCopyright': 'Copyright 2015-2018 Docker Inc. All rights reserved.'
-          }
-        }
-      }
-    },
-
     // images
     copy: {
       dev: {
@@ -275,32 +251,6 @@ module.exports = function (grunt) {
         tasks: ['newer:copy:dev']
       }
     },
-    'electron-packager': {
-      build: {
-        options: {
-          platform: process.platform,
-          arch: process.arch,
-          dir: './build',
-          out: './dist/',
-          name: 'Kitematic',
-          ignore: 'bower.json',
-          version: packagejson['electron-version'], // set version of electron
-          overwrite: true
-        }
-      },
-      osxlnx: {
-        options: {
-          platform: 'linux',
-          arch: 'x64',
-          dir: './build',
-          out: './dist/',
-          name: 'Kitematic',
-          ignore: 'bower.json',
-          version: packagejson['electron-version'], // set version of electron
-          overwrite: true
-        }
-      }
-    },
     'electron-installer-debian': {
       options: {
         name: BASENAME.toLowerCase(), // spaces and brackets cause linting errors
@@ -382,14 +332,13 @@ module.exports = function (grunt) {
   });
 
   // Load the plugins for linux packaging
-  grunt.loadNpmTasks('grunt-electron-packager');
   grunt.loadNpmTasks('grunt-electron-installer-debian');
   grunt.loadNpmTasks('grunt-electron-installer-redhat');
 
   grunt.registerTask('default', ['newer:babel', 'less', 'newer:copy:dev', 'shell:electron', 'watchChokidar']);
 
   grunt.registerTask('release-mac', ['clean:release', 'babel', 'less', 'copy:dev', 'copy:osx']);
-  grunt.registerTask('release-win', ['clean:release', 'babel', 'less', 'copy:dev', 'copy:windows', 'rcedit:exes']);
+  grunt.registerTask('release-win', ['clean:release', 'babel', 'less', 'copy:dev', 'copy:windows']);
   
   if (IS_LINUX) {
     if (linuxpackage) {

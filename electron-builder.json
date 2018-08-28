@@ -1,6 +1,8 @@
 {
+  "productName": "Kitematic",
   "appId": "com.docker.kitematic",
   "asar": true,
+  "copyright": "Copyright 2015-2018 Docker Inc. All rights reserved.",
   "directories": {
     "output": "./dist/"
   },
@@ -15,7 +17,14 @@
     },
     "packages.json"
   ],
-  "linux": {},
+  "linux": {
+    "category": "Development",
+    "target": [
+      {
+        "target": "deb"
+      }
+    ]
+  },
   "mac": {
     "category": "public.app-category.developer-tools",
     "icon": "util/kitematic.icns",
@@ -25,10 +34,6 @@
       }
     ]
   },
-  "msi": {
-    "warningsAsErrors": false
-  },
-  "productName": "Kitematic",
   "win": {
     "extraResources": "./resources/**/*",
     "icon": "./util/kitematic.ico",
